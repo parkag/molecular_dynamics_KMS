@@ -6,9 +6,9 @@ class Simulation(object):
     system = [None]
 
     So = 100
-    Sd = 20000
-    Sout = 100
-    Sxyz = 100
+    Sd = 2000
+    Sout = 10
+    Sxyz = 10
 
     xyzFile = open('simulation_output', 'w')
     stateFile = open('state_output', 'w')
@@ -23,7 +23,7 @@ class Simulation(object):
             self.system.evolve()
             if ( s % self.Sout == 0 ):
                 #zapis t, H, V, T, P do pliku
-                print( self.system.T, self.system.P, self.system.V, self.system.Ek+self.system.V, file=self.stateFile)
+                print( self.system.T, self.system.P, self.system.V, file=self.stateFile)
             if ( s % self.Sxyz == 0 ):
                 #zapis r[][], E[] do avs.dat (x,y,z,E)
                 for particle in self.system.particles:
