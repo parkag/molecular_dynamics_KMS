@@ -7,8 +7,8 @@ class ClosedSystem(object):
     Contains whole world of the simulation
     """
 
-    def __init__(self):
-        self.n = 5       # number of atoms along one side of the crystal
+    def __init__(self, n_atoms=5):
+        self.n = n_atoms       # number of atoms along one side of the crystal
         self.m = 40      # mass of each atom [u]
         self.eps = 1.0	# minimal potential energy of each atom
         self.f = 1e2     # flexibility of the gas container [kJ/mol * nm^-2]
@@ -25,10 +25,9 @@ class ClosedSystem(object):
         self.Ek = 0      # Kinetic energy [kJ/mol]
         self.T = 0       # Current temperature [K]
 
+    def create_particles(self):
         self.particle_count = self.n ** 3
         self.particles = [None] * self.particle_count
-
-    def create_particles(self):
        # basis vectors for creating the initial crystal structure
         b1 = [self.a, 0.0, 0.0]
         b2 = [self.a / 2.0, self.a * sqrt(3.0) / 2.0, 0.0]
@@ -54,9 +53,9 @@ class ClosedSystem(object):
                     curr_ind += 1
 
         # Center of the mass momentum = 0
-        for i in xrange(self.particle_count):
-            for d in xrange(3):
-                self.particles[i].p[d] -= 1.0/self.particle_count * total_momentum[d]
+        #for i in xrange(self.particle_count):
+        #    for d in xrange(3):
+        #        self.particles[i].p[d] -= 1.0/self.particle_count * total_momentum[d]
 
     def calculate_state(self):
         self.V = 0.0
@@ -79,7 +78,6 @@ class ClosedSystem(object):
                     self.particles[i].F[d] = self.f * (self.L - ri) * self.particles[i].r[d] / ri
             else:
                 self.particles[i].F = [0.0, 0.0, 0.0]
-		pass
 
             #(15) akumulacja cisnienia chwilowego
             self.P += 1.0 / (4 * 3.1415 * self.L ** 2) * self.particles[i].abs_F()
@@ -97,6 +95,7 @@ class ClosedSystem(object):
                     self.particles[i].F[d] += Fij
 
             self.V += Vs
+ 
 
     def evolve(self):
         self.Ek = 0.0
@@ -117,7 +116,6 @@ class ClosedSystem(object):
             self.Ek += self.particles[i].abs_p() ** 2 / (2 * self.m)
 
         self.T = 2.0 / (3.0 * self.particle_count * self.k) * self.Ek
-
 
 def main():
     system = ClosedSystem()
