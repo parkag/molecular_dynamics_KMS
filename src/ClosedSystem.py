@@ -8,14 +8,14 @@ class ClosedSystem(object):
     """
 
     def __init__(self, n_atoms=5):
-        self.n = n_atoms       # number of atoms along one side of the crystal
+        self.n = n_atoms # number of atoms along one side of the crystal
         self.m = 40      # mass of each atom [u]
-        self.eps = 1.0	# minimal potential energy of each atom
-        self.f = 1e2     # flexibility of the gas container [kJ/mol * nm^-2]
+        self.eps = 1.0	 # minimal potential energy of each atom
+        self.f = 1e4     # flexibility of the gas container [kJ/mol * nm^-2]
         self.L = 2.6     # radius of the spherical container [nm]
         self.a = 0.38    # lattice constant [nm]
         self.R = 0.38    # distance between atoms that minimizes V [nm]
-        self.T0 = 20      # initial temperature [K]
+        self.T0 = 20     # initial temperature [K]
         self.tau = 2e-3  # time step [ps]
 
         self.k = 8.31e-3 # Boltzmann constant [kJ/mol * K^-1]
@@ -52,10 +52,13 @@ class ClosedSystem(object):
 
                     curr_ind += 1
 
-        # Center of the mass momentum = 0
-        #for i in xrange(self.particle_count):
-        #    for d in xrange(3):
-        #        self.particles[i].p[d] -= 1.0/self.particle_count * total_momentum[d]
+        self.eliminate_center_of_mass_momentum(total_momentum)
+
+    def eliminate_center_of_mass_momentum(self, total_momentum):
+        for i in xrange(self.particle_count):
+            for d in xrange(3):
+                self.particles[i].p[d] -= 1.0/self.particle_count * total_momentum[d]
+
 
     def calculate_state(self):
         self.V = 0.0
@@ -95,7 +98,7 @@ class ClosedSystem(object):
                     self.particles[i].F[d] += Fij
 
             self.V += Vs
- 
+
 
     def evolve(self):
         self.Ek = 0.0
