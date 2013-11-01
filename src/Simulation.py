@@ -53,8 +53,8 @@ class Simulation(object):
         self.xyzFile.close()
         self.stateFile.close()
 
-        print('Pv =%lf ', 4.0/3.0 * 3.1415 * self.Psr*self.system.L**3)
-        print ('3/2 NkT = %lf', 3.0/2 * self.system.n**3 * self.system.k * self.Tsr )
+        #print('Pv = ', 4.0/3.0 * 3.1415 * self.Psr*self.system.L**3)
+        #print ('3/2 NkT = ', 3.0/2 * self.system.n**3 * self.system.k * self.Tsr )
 
 def main():
    experiment = Simulation()
