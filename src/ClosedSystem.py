@@ -51,8 +51,8 @@ class ClosedSystem(object):
                         total_momentum[d] += self.particles[curr_ind].p[d]
 
                     curr_ind += 1
-
         self.eliminate_center_of_mass_momentum(total_momentum)
+
 
     def eliminate_center_of_mass_momentum(self, total_momentum):
         for i in xrange(self.particle_count):

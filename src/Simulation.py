@@ -26,6 +26,10 @@ class Simulation(object):
 
         self.system.create_particles()
 
+        self.Psr = 0
+        self.Tsr = 0
+        self.Vsr = 0
+
     def start_calculation(self):
         self.xyzFile = open('simulation_output', 'w')
         self.stateFile = open('state_output', 'w')
@@ -38,15 +42,19 @@ class Simulation(object):
             if ( s % self.Sxyz == 0 ):
                 #zapis r[][], E[] do avs.dat (r,p)
                 for particle in self.system.particles:
-                    print(particle.r[0], particle.r[1], particle.r[2], particle.p[0], particle.p[1], particle.p[2], file = self.xyzFile)    
+                    print(particle.r[0], particle.r[1], particle.r[2], particle.p[0], particle.p[1], particle.p[2], file = self.xyzFile)
 
             if ( s > self.So ):
                 #akumulacja wartosci usrednianych T', P', H'
-                pass
+                self.Tsr += self.system.T/self.Sd
+                self.Psr += self.system.P/self.Sd
+                self.Vsr += self.system.V/self.Sd
 
         self.xyzFile.close()
         self.stateFile.close()
 
+        print('Pv =%lf ', 4.0/3.0 * 3.1415 * self.Psr*self.system.L**3)
+        print ('3/2 NkT = %lf', 3.0/2 * self.system.n**3 * self.system.k * self.Tsr )
 
 def main():
    experiment = Simulation()

@@ -1,8 +1,8 @@
 # wxt terminal
 #set terminal wxt size 350,262 enhanced font 'Verdana,10' persist
 # png
-#set terminal pngcairo size 350,262 enhanced font 'Verdana,10'
-#set output 'multiplot1.png'
+set terminal pngcairo size 1350,700 enhanced font 'Verdana,10'
+set output 'multiplot1.png'
 # svg
 #set terminal svg size 350,262 fname 'Verdana, Helvetica, Arial, sans-serif' \
 #fsize '10'

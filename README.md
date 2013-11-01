@@ -1,7 +1,7 @@
 molecular_dynamics_KMS
 ======================
 
-Simple simulation of multiple argon atoms closed in a spherical container in zero-g.
+Simple simulation of multiple argon atoms enclosed in a spherical container in zero-g.
 
 for running pure computations use: pypy Simulation.py
 for visual mode use: python run.py -v
